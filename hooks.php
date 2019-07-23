@@ -1,9 +1,13 @@
 <?php
 
-//functions.phpで読み込む
+/*
+ *
+ * functions.phpで読み込むこと
+ *
+ */
 
 
-//ページネーション設定
+//ページネーション設定（WP-PageNavi用）
 function change_posts_per_page($query) {
     if ( is_admin() || ! $query->is_main_query() ) {
         return;
@@ -79,3 +83,7 @@ function add_related_posts( $content ){
     return $content;
 }
 add_filter( 'the_content', 'add_related_posts' );
+
+
+
+

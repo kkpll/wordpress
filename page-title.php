@@ -1,9 +1,9 @@
 <?php
 
-function page_title(){
+function archive_page_title(){
 
-    $id;
-    $tax_slug;
+    $id = '';
+    $tax_slug = '';
     $page_title = '';
 
     if(is_category()){

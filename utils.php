@@ -1,14 +1,16 @@
 <?php
 
+
 //親カテゴリーIDから全ての子カテゴリーIDを取得
-function get_category_id($parent_id){
+function get_category_id($parent_id,$taxonomy){
     $parent_cat_id = $parent_id;
-    $categories = get_term_children($parent_cat_id, 'category');
+    $categories = get_term_children($parent_cat_id, $taxonomy);
     array_push($categories, $parent_cat_id);
     asort($categories);
-    $arg_categories = implode(",", $categories);
-    return $arg_categories;
+    $child_categories = implode(",", $categories);
+    return $child_categories;
 }
+
 
 //個別ページネーション
 function single_pagination($before_text,$next_text){
@@ -21,8 +23,10 @@ function single_pagination($before_text,$next_text){
     <?php
 }
 
-//一覧ページ大見出し
+//一覧ページのカテゴリー（タグ・タクソノミー・ポストタイプ）タイトル
 function page_title(){
+
+    global $post;
 
     $id;
     $tax_slug;
@@ -50,6 +54,9 @@ function page_title(){
         $id = $term->term_id;
         $taxonomy = get_term($id,$tax_slug);
         $page_title = $taxonomy->name;
+    }else if(is_post_type_archive()){
+        $obj = get_post_type_object($post->post_type);
+        $page_title = $obj->labels->singular_name;
     }
 
     return $page_title;
